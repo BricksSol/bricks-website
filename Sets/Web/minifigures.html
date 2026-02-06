@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BRICKS | Minifigures</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Oswald:wght@500;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <div class="noise-overlay"></div>
+
+    <header>
+        <div class="logo">
+            <img src="assets/logo.jpg" alt="BRICKS Logo">
+        </div>
+        <div class="nav-links">
+            <a href="index.html">DISCOVER</a>
+            <a href="drops.html">DROPS</a>
+            <a href="minifigures.html" class="active">MINIFIGURES</a>
+            <a href="city.html">CITY</a>
+            <a href="socials.html">SOCIALS</a>
+            <a href="about.html">ABOUT</a>
+        </div>
+        <div class="cart-icon">CART (0)</div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="hero-content">
+                <h1>MINIFIGURES</h1>
+                <p>LIMITED EDITION SATIRICAL FIGURES. COLLECT THEM ALL.</p>
+                <div class="scroll-indicator">SCROLL TO EXPLORE</div>
+            </div>
+        </section>
+
+        <section class="max-w-4xl mx-auto px-4 py-12 text-center" style="text-align: center; padding: 4rem 1rem;">
+            <div style="margin-bottom: 2rem;">
+                <a href="https://www.launchmynft.io/collections/3SgXmEWUm3vXDzLA1njAH9j5EV9EMef2drVgDoWBitwS/BI8ugKpqx0bBcA9uupbe"
+                    target="_blank" style="
+                        display: inline-block;
+                        padding: 1rem 2rem;
+                        background: var(--accent);
+                        color: #fff;
+                        text-decoration: none;
+                        font-family: var(--font-display);
+                        letter-spacing: 2px;
+                        font-weight: 700;
+                        border-radius: 4px;
+                        transition: all 0.3s ease;
+                        font-size: 1.5rem;
+                    "
+                    onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 0 15px var(--accent-glow)'"
+                    onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+                    NFTs
+                </a>
+            </div>
+            <div
+                style="font-family: 'Oswald', sans-serif; letter-spacing: 1px; line-height: 1.6; max-width: 800px; margin: 0 auto; color: #ccc; font-size: 1.1rem; text-transform: uppercase;">
+                <p style="margin-bottom: 1rem;">Free NFTs to claim for holders. Once claimed share in the community so
+                    other Bricks holders can see what you got.</p>
+                <p style="margin-bottom: 1rem;">This is our way to create a shared identity beyond just holding the
+                    token.</p>
+                <p style="margin-bottom: 1rem;">We want to create an army of bricks holders and let the community take
+                    over from day 1.</p>
+                <p style="margin-bottom: 1rem;">With 900 random Bricks mini figure available from day 1 this is an
+                    opportunity for holders to represent and let the army grow.</p>
+                <p style="margin-bottom: 1rem;">Only 1 stage of our goal to become number 1.</p>
+                <p>Don’t worry if you missed the first NFT release, these will be a regular occurrence with a completely
+                    new set each drop. These NFTs will have importance in the future with the plans for Bricks City.</p>
+            </div>
+        </section>
+
+        <section class="gallery-container">
+            <div id="minifigure-grid" class="gallery-grid">
+                <!-- Items will be injected here by JS -->
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2024 BRICKS Satire Project. Not affiliated with The LEGO Group.</p>
+            <p>For parody and entertainment purposes only.</p>
+        </div>
+    </footer>
+
+    <!-- Lightbox Modal -->
+    <div id="lightbox" class="lightbox hidden">
+        <div class="lightbox-content">
+            <span class="close-lightbox">&times;</span>
+            <img id="lightbox-img" src="" alt="Minifigure Detail">
+            <div class="lightbox-details">
+                <h2 id="lightbox-title">FIGURE TITLE</h2>
+                <div class="lightbox-meta">
+                    <span class="price">$9.99</span>
+                    <span class="status">SOLD OUT</span>
+                </div>
+                <button class="buy-btn" disabled>SOLD OUT</button>
+            </div>
+        </div>
+        <div class="lightbox-backdrop"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

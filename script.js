@@ -16,10 +16,11 @@ const lightboxTitle = document.getElementById('lightbox-title');
 const closeLightbox = document.querySelector('.close-lightbox');
 const lightboxBackdrop = document.querySelector('.lightbox-backdrop');
 
-// Remove extension (case insensitive) and replace special chars
-return filename.replace(/\.[^/.]+$/, "")
-    .replace(/_/g, ' ')
-    .replace(/-/g, ' ');
+function formatTitle(filename) {
+    // Remove extension (case insensitive) and replace special chars
+    return filename.replace(/\.[^/.]+$/, "")
+        .replace(/_/g, ' ')
+        .replace(/-/g, ' ');
 }
 
 // Populate Gallery

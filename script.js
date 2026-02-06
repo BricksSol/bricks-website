@@ -17,8 +17,8 @@ const closeLightbox = document.querySelector('.close-lightbox');
 const lightboxBackdrop = document.querySelector('.lightbox-backdrop');
 
 function formatTitle(filename) {
-    // Remove extension (case insensitive) and replace special chars
-    return filename.replace(/\.[^/.]+$/, "")
+    // Aggressive extension removal
+    return filename.replace(/\.[a-zA-Z0-9]+$/, '')
         .replace(/_/g, ' ')
         .replace(/-/g, ' ');
 }

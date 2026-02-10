@@ -16,8 +16,13 @@ const lightboxTitle = document.getElementById('lightbox-title');
 const closeLightbox = document.querySelector('.close-lightbox');
 const lightboxBackdrop = document.querySelector('.lightbox-backdrop');
 
+// Navigation
+const prevBtn = document.querySelector('.prev-arrow');
+const nextBtn = document.querySelector('.next-arrow');
+let currentImageIndex = 0;
+let currentImages = [];
+
 function formatTitle(filename) {
-    // Aggressive extension removal
     return filename.replace(/\.[a-zA-Z0-9]+$/, '')
         .replace(/_/g, ' ')
         .replace(/-/g, ' ');
@@ -30,8 +35,6 @@ if (galleryGrid) {
         card.className = 'card';
         card.setAttribute('role', 'button');
 
-        // Lazy loading placeholder idea could go here, but simple img for now
-        // Ensure accurate path to assets
         const imagePath = `assets/sets/${set}`;
         const title = formatTitle(set);
 
@@ -45,18 +48,84 @@ if (galleryGrid) {
             </div>
         `;
 
-        card.addEventListener('click', () => openLightbox(imagePath, title));
+        card.addEventListener('click', () => openLightbox(set, title));
         galleryGrid.appendChild(card);
     });
 }
 
 // Lightbox Logic
-function openLightbox(imgSrc, title) {
-    lightboxImg.src = imgSrc;
-    lightboxTitle.textContent = title;
+function openLightbox(input, title) {
+    // Determine if input is a full path (Minifigure) or a filename (Set)
+    const isMinifigure = input.includes('/');
+
+    // Reset State
+    currentImages = [];
+
+    if (isMinifigure) {
+        // Simple Single Image Mode
+        currentImages = [input];
+        lightboxTitle.textContent = title;
+
+        // Hide arrows for single image
+        if (prevBtn) prevBtn.style.display = 'none';
+        if (nextBtn) nextBtn.style.display = 'none';
+    } else {
+        // Set Carousel Mode
+        const filename = input;
+        const baseName = filename.substring(0, filename.lastIndexOf('.'));
+        const frontImg = `assets/sets/${filename}`;
+        const backImg = `assets/sets/${baseName}_back.png`;
+        const sideImg = `assets/sets/${baseName}_side.png`;
+
+        currentImages = [frontImg, backImg, sideImg];
+        lightboxTitle.textContent = title;
+
+        // Show arrows
+        if (prevBtn) prevBtn.style.display = 'flex';
+        if (nextBtn) nextBtn.style.display = 'flex';
+    }
+
+    // Open Modal
+    setMainImage(0);
     lightbox.classList.remove('hidden');
-    document.body.style.overflow = 'hidden'; // Stop background scrolling
+    document.body.style.overflow = 'hidden';
 }
+
+function setMainImage(index) {
+    // Handle wrapping
+    if (index < 0) index = currentImages.length - 1;
+    if (index >= currentImages.length) index = 0;
+
+    currentImageIndex = index;
+
+    // Set source
+    const src = currentImages[index];
+    lightboxImg.src = src;
+
+    // Error handling: if image fails (e.g. missing side view), try next?
+    // Or just let it show broken?
+    // Let's add a one-time error handler to skip.
+    lightboxImg.onerror = function () {
+        // Prevent infinite loop if all fail
+        if (currentImages.length <= 1) return;
+
+        // Remove this bad image from array
+        console.log("Image not found, skipping:", src);
+        currentImages.splice(index, 1);
+
+        // Try setting same index (which is now the next image)
+        setMainImage(index);
+    };
+
+    // Unbind generic error handler after load? No, simplest is to just reassign src.
+    // NOTE: The onerror above is bound to the element. It stays.
+    // We need to be careful not to create a stack overflow if all 3 fail.
+    // The previous check `currentImages.length <= 1` helps.
+}
+
+// Event Listeners
+if (prevBtn) prevBtn.onclick = () => setMainImage(currentImageIndex - 1);
+if (nextBtn) nextBtn.onclick = () => setMainImage(currentImageIndex + 1);
 
 function closeLightboxFunc() {
     lightbox.classList.add('hidden');
@@ -64,11 +133,14 @@ function closeLightboxFunc() {
 }
 
 closeLightbox.addEventListener('click', closeLightboxFunc);
-lightboxBackdrop.addEventListener('click', closeLightboxFunc);
+if (lightboxBackdrop) lightboxBackdrop.addEventListener('click', closeLightboxFunc);
 
-// Close on Escape key
 document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') closeLightboxFunc();
+    if (!lightbox.classList.contains('hidden')) {
+        if (e.key === 'ArrowLeft') setMainImage(currentImageIndex - 1);
+        if (e.key === 'ArrowRight') setMainImage(currentImageIndex + 1);
+    }
 });
 
 const minifigures = [

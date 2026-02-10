@@ -6,7 +6,7 @@ const sets = [
     "TMT Set.png", "TOP G.jpg", "The Crashout.jpg", "The Cybertruck.jpg", "The Deep Dive.jpg",
     "The Drive.jpg", "The Glove.jpg", "The Ice Wall.jpg", "The Mask.jpg", "The Slap.jpg",
     "The island.png", "The list.jpg", "The tunnel.jpg", "Tiger King.jpg", "Tokabu.png",
-    "wif.png", "Striped Pyjamas.png"
+    "wif.png", "Striped Pyjamas.png", "The_Beef.png"
 ];
 
 const galleryGrid = document.getElementById('gallery-grid');
@@ -35,7 +35,8 @@ if (galleryGrid) {
         card.className = 'card';
         card.setAttribute('role', 'button');
 
-        const imagePath = `assets/sets/${set}`;
+        // Use encodeURI for the image path to handle spaces
+        const imagePath = `assets/sets/${encodeURIComponent(set)}`;
         const title = formatTitle(set);
 
         card.innerHTML = `
@@ -48,6 +49,7 @@ if (galleryGrid) {
             </div>
         `;
 
+        // Pass original filename to openLightbox, we'll encode logic there
         card.addEventListener('click', () => openLightbox(set, title));
         galleryGrid.appendChild(card);
     });
@@ -63,7 +65,9 @@ function openLightbox(input, title) {
 
     if (isMinifigure) {
         // Simple Single Image Mode
-        currentImages = [input];
+        // Encoded input if needed, but minfigs usually single word or simple
+        // Actually, we should encode the path just in case
+        currentImages = [encodeURI(input)];
         lightboxTitle.textContent = title;
 
         // Hide arrows for single image
@@ -77,7 +81,13 @@ function openLightbox(input, title) {
         const backImg = `assets/sets/${baseName}_back.png`;
         const sideImg = `assets/sets/${baseName}_side.png`;
 
-        currentImages = [frontImg, backImg, sideImg];
+        // Apply encodeURI to handle spaces
+        currentImages = [
+            encodeURI(frontImg),
+            encodeURI(backImg),
+            encodeURI(sideImg)
+        ];
+
         lightboxTitle.textContent = title;
 
         // Show arrows

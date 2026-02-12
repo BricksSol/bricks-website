@@ -6,7 +6,7 @@ const sets = [
     "TMT Set.png", "TOP G.jpg", "The Crashout.jpg", "The Cybertruck.jpg", "The Deep Dive.jpg",
     "The Drive.jpg", "The Glove.jpg", "The Ice Wall.jpg", "The Mask.jpg", "The Slap.jpg",
     "The island.png", "The list.jpg", "The tunnel.jpg", "Tiger King.jpg", "Tokabu.png",
-    "wif.png", "Striped Pyjamas.png", "The_Beef.png"
+    "wif.png", "Striped Pyjamas.png"
 ];
 
 const galleryGrid = document.getElementById('gallery-grid');
